@@ -45,8 +45,19 @@ public final class Text {
      * @param str String to convert
      * @return <b>UTF-8</b> representation of the string in the <b>bit array</b> format
      */
-    public static boolean[] toBitArray(String str){
-        return Helper.fail("NOT IMPLEMENTED");
+    public static boolean[] toBitArray(String str) {
+        byte[] stringAsBytes = toBytes(str);
+
+        boolean[] byteAsBits;
+        boolean[] bitArray = new boolean[stringAsBytes.length * Byte.SIZE];
+        for (int i = 0; i < stringAsBytes.length; ++i) {
+            byteAsBits = Bit.toBitArray(stringAsBytes[i]);
+            for (int j = 0; j < byteAsBits.length; j++) {
+                bitArray[byteAsBits.length * i + j] = byteAsBits[j];
+            }
+        }
+
+        return bitArray;
     }
 
     /**
