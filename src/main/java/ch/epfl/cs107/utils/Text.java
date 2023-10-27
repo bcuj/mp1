@@ -13,6 +13,8 @@ import static ch.epfl.cs107.crypto.Encrypt.*;
 import static ch.epfl.cs107.crypto.Decrypt.*;
 import static ch.epfl.cs107.Main.*;
 
+// For the toString method
+import java.util.Arrays;
 
 /**
  * <b>Task 1.2: </b>Utility class to manipulate texts ({@link String}) objects.
@@ -64,7 +66,17 @@ public final class Text {
      * @return <b>UTF-8 String</b> representation of the bit array
      */
     public static String toString(boolean[] bitArray) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (bitArray != null);
+
+        //1. Convert bit array to byte array
+        byte[] byteArray = new byte[bitArray.length/Byte.SIZE]; //Integer division to avoid reading any trailing bits
+        for (int i = 0; i < byteArray.length; i++) {
+            boolean[] charAsBitArray = java.util.Arrays.copyOfRange(bitArray, Byte.SIZE*i, Byte.SIZE*(i+1));
+            byteArray[i] = Bit.toByte(charAsBitArray);
+        }
+
+        //2. Convert byte array to String
+        return toString(byteArray);
     }
 
 }
