@@ -56,6 +56,7 @@ public final class Main {
         assert testEmbedInLSB();
         assert testByteConversion();
         // ========== Test Text ==========
+        assert testToString();
         //assert testToBitArray();
         Helper.dialog("Tests", "Bit and Text manipulation passed");
         // ========== Test Image ==========
@@ -150,6 +151,18 @@ public final class Main {
                 false, true, false, false, false,
                 false, true, false, false, true, false, false};
         return Arrays.equals(computed, expected);
+    }
+
+    private static boolean testToString() {
+        boolean[] message = {
+                true, true, false, false, false, false,
+                true, true, true, false, true, true,
+                false, true, false, false, false,
+                false, true, false, false, true, false, false};
+        String computed = Text.toString(message);
+        String expected = "ô$";
+        System.out.println(computed);
+        return (computed.equals(expected));
     }
 
     // ============================================================================================
