@@ -39,7 +39,6 @@ public final class Bit {
         assert (pos < Integer.SIZE);
         assert (pos >= 0);
 
-
         if (m) {
             return value | (int) Math.pow(2, pos);
         } else {
