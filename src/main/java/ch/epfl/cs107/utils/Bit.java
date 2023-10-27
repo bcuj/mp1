@@ -128,13 +128,18 @@ public final class Bit {
      * @return the byte representation of the bit array
      */
     public static byte toByte(boolean[] bitArray){
-        int sum = 0;
-        for (int i = 0; i < Byte.SIZE; i++) {
+        assert (bitArray.length == 8);
+
+        // Initialise sum with -128 if the MSB is 1, else 0
+        int sum = bitArray[0] ? (-1*(int) Math.pow(2, Byte.SIZE-1)) : 0;
+
+        // Iterate through the rest of the byte "normally"
+        for (int i = 1; i < Byte.SIZE; i++) {
             if (bitArray[i])
-                sum += (int) Math.pow(2,i);
+                sum += (int) Math.pow(2, Byte.SIZE-1-i);
         }
 
-        return Helper.fail("BUGGY");//(byte) sum;
+        return (byte) sum;
     }
 
 }

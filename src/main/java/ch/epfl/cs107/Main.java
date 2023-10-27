@@ -131,8 +131,9 @@ public final class Main {
     private static boolean testByteConversion() {
         byte value = -4;
         boolean[] computedBooleanArray = Bit.toBitArray(value);
-        System.err.println(Arrays.toString(computedBooleanArray)); // uncomment to debug
+        //System.err.println(Arrays.toString(computedBooleanArray)); // uncomment to debug
         byte computedByte = Bit.toByte(computedBooleanArray);
+        //System.err.println(computedByte); // uncomment to debug
         return computedByte == value;
     }
 
