@@ -53,7 +53,7 @@ public final class Main {
         assert testXthBit();
         assert testGetLSB();
         assert testEmbedInXthBit();
-        //assert testEmbedInLSB();
+        assert testEmbedInLSB();
         //assert testByteConversion();
         // ========== Test Text ==========
         //assert testToBitArray();
