@@ -58,7 +58,11 @@ public final class Bit {
      * @return <code>true</code> if the bit is '1' and <code>false</code> otherwise
      */
     public static boolean getXthBit(int value, int pos) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (pos < Integer.SIZE);
+        assert (pos >= 0);
+
+        int shiftedValue = value >>> pos;
+        return (shiftedValue & 0b1) == 1;
     }
 
     /**
