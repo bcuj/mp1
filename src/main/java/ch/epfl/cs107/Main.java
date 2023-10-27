@@ -54,7 +54,7 @@ public final class Main {
         assert testGetLSB();
         assert testEmbedInXthBit();
         assert testEmbedInLSB();
-        //assert testByteConversion();
+        assert testByteConversion();
         // ========== Test Text ==========
         //assert testToBitArray();
         Helper.dialog("Tests", "Bit and Text manipulation passed");
@@ -131,7 +131,7 @@ public final class Main {
     private static boolean testByteConversion() {
         byte value = -4;
         boolean[] computedBooleanArray = Bit.toBitArray(value);
-        //System.err.println(Arrays.toString(computedBooleanArray)); // uncomment to debug
+        System.err.println(Arrays.toString(computedBooleanArray)); // uncomment to debug
         byte computedByte = Bit.toByte(computedBooleanArray);
         return computedByte == value;
     }

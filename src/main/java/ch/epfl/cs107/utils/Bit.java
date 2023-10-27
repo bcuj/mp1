@@ -104,8 +104,8 @@ public final class Bit {
      */
     public static boolean[] toBitArray(byte value){
         boolean[] bitArray = new boolean[Byte.SIZE];
-        for(int i =0; i < Byte.SIZE; ++i){
-            bitArray[i] = getXthBit(value, i);
+        for(int i = 0; i < Byte.SIZE; ++i){
+            bitArray[i] = getXthBit(value, Byte.SIZE-i-1);
         }
 
         return bitArray;
@@ -128,7 +128,13 @@ public final class Bit {
      * @return the byte representation of the bit array
      */
     public static byte toByte(boolean[] bitArray){
-        return Helper.fail("NOT IMPLEMENTED");
+        int sum = 0;
+        for (int i = 0; i < Byte.SIZE; i++) {
+            if (bitArray[i])
+                sum += (int) Math.pow(2,i);
+        }
+
+        return Helper.fail("BUGGY");//(byte) sum;
     }
 
 }
