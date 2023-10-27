@@ -13,8 +13,6 @@ import static ch.epfl.cs107.crypto.Encrypt.*;
 import static ch.epfl.cs107.crypto.Decrypt.*;
 import static ch.epfl.cs107.Main.*;
 
-// For the toString method
-import java.util.Arrays;
 
 /**
  * <b>Task 1.2: </b>Utility class to manipulate texts ({@link String}) objects.
