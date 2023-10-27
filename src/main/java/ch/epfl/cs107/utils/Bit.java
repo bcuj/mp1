@@ -128,6 +128,7 @@ public final class Bit {
      * @return the byte representation of the bit array
      */
     public static byte toByte(boolean[] bitArray){
+        assert (bitArray != null);
         assert (bitArray.length == 8);
 
         // Initialise sum with -128 if the MSB is 1, else 0
