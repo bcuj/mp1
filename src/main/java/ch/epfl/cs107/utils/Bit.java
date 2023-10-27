@@ -36,7 +36,15 @@ public final class Bit {
      * @return embedded value
      */
     public static int embedInXthBit(int value, boolean m, int pos) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (pos < Integer.SIZE);
+        assert (pos >= 0);
+
+
+        if (m) {
+            return value | (int) Math.pow(2, pos);
+        } else {
+            return value & (~ (int) Math.pow(2, pos));
+        }
     }
 
     /**
