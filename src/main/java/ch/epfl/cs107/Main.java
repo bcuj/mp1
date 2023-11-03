@@ -313,7 +313,7 @@ public final class Main {
         assert testCaesar(byteMessage, byteKey[0]);
         assert testXor(byteMessage, byteKey[0]);
         assert testVigenere(byteMessage, byteKey);
-//        assert testOneTimePad(byteMessage);
+        assert testOneTimePad(byteMessage);
 //        assert testCBC(byteMessage, byteKey);
     }
 
