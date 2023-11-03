@@ -37,7 +37,12 @@ public final class Image {
      * @return packed value of the pixel
      */
     public static int argb(byte alpha, byte red, byte green, byte blue){
-        return Helper.fail("NOT IMPLEMENTED");
+        int shiftedAlpha = Byte.toUnsignedInt(alpha) << 24;
+        int shiftedRed = Byte.toUnsignedInt(red) << 16;
+        int shiftedGreen = Byte.toUnsignedInt(green) << 8;
+        int shiftedBlue = Byte.toUnsignedInt(blue);
+
+        return (shiftedAlpha | shiftedRed | shiftedGreen | shiftedBlue);
     }
 
     /**
@@ -47,7 +52,7 @@ public final class Image {
      * @return the alpha component of the pixel
      */
     public static byte alpha(int pixel){
-        return (byte) (pixel >> 24 & 0xFF);
+        return (byte) (pixel >>> 24 & 0xFF);
     }
 
     /**
@@ -57,7 +62,7 @@ public final class Image {
      * @return the red component of the pixel
      */
     public static byte red(int pixel){
-        return (byte) (pixel >> 16 & 0xFF);
+        return (byte) (pixel >>> 16 & 0xFF);
     }
 
     /**
@@ -67,7 +72,7 @@ public final class Image {
      * @return the green component of the pixel
      */
     public static byte green(int pixel){
-        return (byte) (pixel >> 8 & 0xFF);
+        return (byte) (pixel >>> 8 & 0xFF);
     }
 
     /**
