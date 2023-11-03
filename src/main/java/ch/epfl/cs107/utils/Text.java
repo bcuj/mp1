@@ -52,8 +52,8 @@ public final class Text {
         boolean[] bitArray = new boolean[stringAsBytes.length * Byte.SIZE];
         for (int i = 0; i < stringAsBytes.length; ++i) {
             byteAsBits = Bit.toBitArray(stringAsBytes[i]);
-            for (int j = 0; j < byteAsBits.length; j++) {
-                bitArray[byteAsBits.length * i + j] = byteAsBits[j];
+            for (int j = 0; j < Byte.SIZE; j++) {
+                bitArray[Byte.SIZE * i + j] = byteAsBits[j];
             }
         }
 
