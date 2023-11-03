@@ -59,6 +59,7 @@ public final class Encrypt {
      */
     public static byte[] vigenere(byte[] plainText, byte[] keyword) {
         assert (plainText != null);
+        assert (keyword != null);
 
         byte[] cipher = new byte[plainText.length];
         for (int i = 0; i < plainText.length; i++)

@@ -56,6 +56,7 @@ public final class Decrypt {
      */
     public static byte[] vigenere(byte[] cipher, byte[] keyword) {
         assert (cipher != null);
+        assert (keyword != null);
 
         byte[] plainText = new byte[cipher.length];
         for (int i = 0; i < cipher.length; i++)
