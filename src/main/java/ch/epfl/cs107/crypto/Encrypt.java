@@ -132,7 +132,14 @@ public final class Encrypt {
      * @param result Array containing the result after the execution
      */
     public static void oneTimePad(byte[] plainText, byte[] pad, byte[] result) {
-        Helper.fail("NOT IMPLEMENTED");
+        assert (plainText != null);
+        assert (pad != null);
+        assert (result != null);
+        assert (pad.length >= plainText.length);
+        assert (plainText.length == result.length);
+
+        for (int i = 0; i < plainText.length; i++)
+            result[i] = (byte) (plainText[i] ^ pad[i]);
     }
 
 }
