@@ -36,7 +36,13 @@ public final class Encrypt {
      * @return an encoded byte array
      */
     public static byte[] caesar(byte[] plainText, byte key) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (plainText != null);
+
+        byte[] cipher = new byte[plainText.length];
+        for (int i = 0; i < plainText.length; i++)
+            cipher[i] = (byte) (plainText[i] + key);
+
+        return cipher;
     }
 
     // ============================================================================================
@@ -52,7 +58,13 @@ public final class Encrypt {
      * @return an encoded byte array
      */
     public static byte[] vigenere(byte[] plainText, byte[] keyword) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (plainText != null);
+
+        byte[] cipher = new byte[plainText.length];
+        for (int i = 0; i < plainText.length; i++)
+            cipher[i] = (byte) (plainText[i] + keyword[i % keyword.length]);
+
+        return cipher;
     }
 
     // ============================================================================================

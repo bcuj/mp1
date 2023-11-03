@@ -35,7 +35,13 @@ public final class Decrypt {
      * @return decoded message
      */
     public static byte[] caesar(byte[] cipher, byte key) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (cipher != null);
+
+        byte[] plainText = new byte[cipher.length];
+        for (int i = 0; i < cipher.length; i++)
+            plainText[i] = (byte) (cipher[i] - key);
+
+        return plainText;
     }
 
     // ============================================================================================
@@ -49,7 +55,13 @@ public final class Decrypt {
      * @return decoded message
      */
     public static byte[] vigenere(byte[] cipher, byte[] keyword) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (cipher != null);
+
+        byte[] plainText = new byte[cipher.length];
+        for (int i = 0; i < cipher.length; i++)
+            plainText[i] = (byte) (cipher[i] - keyword[i % keyword.length]);
+
+        return plainText;
     }
 
     // ============================================================================================

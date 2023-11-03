@@ -74,7 +74,7 @@ public final class Main {
         // ========== Test Cryptography Methods ==========
         String message = "La vie est un long fleuve tranquille :-)";
         String key = "2cF%5";
-        //testCrypto(message, key);
+        testCrypto(message, key);
         //message = Text.toString(Helper.read("text_one.txt"));
         //testCrypto(message, key);
         Helper.dialog("Tests ", "Cryptography passed");
@@ -259,7 +259,8 @@ public final class Main {
         //Decoding with key
         byte[] decryptedAsBytes = Decrypt.caesar(result, key);
         String decryptedAsString = Text.toString(decryptedAsBytes);
-        //System.out.println("Decoded : " + decryptedAsString); // uncomment to debug
+//        System.out.println("Encoded : " + Text.toString(result));
+//        System.out.println("Decoded : " + decryptedAsString); // uncomment to debug
         return Arrays.equals(string, decryptedAsBytes);
     }
 
@@ -279,7 +280,7 @@ public final class Main {
         //Decoding with key
         byte[] decryptedAsBytes = Decrypt.vigenere(result, key);
         String decryptedAsString = Text.toString(decryptedAsBytes);
-        //System.out.println("Decoded : " + decryptedAsString); // uncomment to debug
+//        System.out.println("Decoded : " + decryptedAsString); // uncomment to debug
         return Arrays.equals(string, decryptedAsBytes);
     }
 
@@ -310,10 +311,10 @@ public final class Main {
         byte[] byteMessage = Text.toBytes(message);
         byte[] byteKey = Text.toBytes(key);
         assert testCaesar(byteMessage, byteKey[0]);
-        assert testXor(byteMessage, byteKey[0]);
+//        assert testXor(byteMessage, byteKey[0]);
         assert testVigenere(byteMessage, byteKey);
-        assert testOneTimePad(byteMessage);
-        assert testCBC(byteMessage, byteKey);
+//        assert testOneTimePad(byteMessage);
+//        assert testCBC(byteMessage, byteKey);
     }
 
     // ============================================================================================
