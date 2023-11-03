@@ -89,7 +89,14 @@ public final class Decrypt {
      * @return decoded message
      */
     public static byte[] xor(byte[] cipher, byte key) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (cipher != null);
+
+        byte[] plainText = new byte[cipher.length];
+        for (int i = 0; i < cipher.length; i++)
+            //XOR being involutive, "xor"-ing the cipher again reverts the encryption process
+            plainText[i] = (byte) (cipher[i] ^ key);
+
+        return plainText;
     }
 
     // ============================================================================================

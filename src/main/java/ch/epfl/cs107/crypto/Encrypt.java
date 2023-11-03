@@ -92,7 +92,13 @@ public final class Encrypt {
      * @return an encoded byte array
      */
     public static byte[] xor(byte[] plainText, byte key) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (plainText != null);
+
+        byte[] cipher = new byte[plainText.length];
+        for (int i = 0; i < plainText.length; i++)
+            cipher[i] = (byte) (plainText[i] ^ key);
+
+        return cipher;
     }
 
     // ============================================================================================

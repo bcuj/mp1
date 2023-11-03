@@ -311,7 +311,7 @@ public final class Main {
         byte[] byteMessage = Text.toBytes(message);
         byte[] byteKey = Text.toBytes(key);
         assert testCaesar(byteMessage, byteKey[0]);
-//        assert testXor(byteMessage, byteKey[0]);
+        assert testXor(byteMessage, byteKey[0]);
         assert testVigenere(byteMessage, byteKey);
 //        assert testOneTimePad(byteMessage);
 //        assert testCBC(byteMessage, byteKey);
