@@ -92,7 +92,11 @@ public final class Image {
      * @return gray scaling of the given pixel
      */
     public static int gray(int pixel){
-        return Helper.fail("NOT IMPLEMENTED");
+        int redInt = Byte.toUnsignedInt(red(pixel));
+        int greenInt = Byte.toUnsignedInt(green(pixel));
+        int blueInt = Byte.toUnsignedInt(blue(pixel));
+
+        return (redInt + greenInt + blueInt) / 3;
     }
 
     /**
@@ -103,7 +107,10 @@ public final class Image {
      * @return binary representation of a pixel
      */
     public static boolean binary(int gray, int threshold){
-        return Helper.fail("NOT IMPLEMENTED");
+        assert(threshold <= 255 && threshold >= 0);
+        assert(gray <= 255 && gray >= 0);
+
+        return (gray >= threshold);
     }
 
     // ============================================================================================
