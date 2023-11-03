@@ -47,7 +47,7 @@ public final class Image {
      * @return the alpha component of the pixel
      */
     public static byte alpha(int pixel){
-        return Helper.fail("NOT IMPLEMENTED");
+        return (byte) (pixel >> 24 & 0xFF);
     }
 
     /**
@@ -57,7 +57,7 @@ public final class Image {
      * @return the red component of the pixel
      */
     public static byte red(int pixel){
-        return Helper.fail("NOT IMPLEMENTED");
+        return (byte) (pixel >> 16 & 0xFF);
     }
 
     /**
@@ -67,7 +67,7 @@ public final class Image {
      * @return the green component of the pixel
      */
     public static byte green(int pixel){
-        return Helper.fail("NOT IMPLEMENTED");
+        return (byte) (pixel >> 8 & 0xFF);
     }
 
     /**
@@ -77,7 +77,7 @@ public final class Image {
      * @return the blue component of the pixel
      */
     public static byte blue(int pixel){
-        return Helper.fail("NOT IMPLEMENTED");
+        return (byte) (pixel & 0xFF);
     }
 
     /**
