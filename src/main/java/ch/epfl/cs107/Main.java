@@ -60,9 +60,9 @@ public final class Main {
         assert testToBitArray();
         Helper.dialog("Tests", "Bit and Text manipulation passed");
         // ========== Test Image ==========
-        //assert testConversionARGBInt();
-        //assert testPixelToGray();
-        //assert testGrayToBinary();
+        assert testConversionARGBInt();
+        assert testPixelToGray();
+        assert testGrayToBinary();
         //assert testImageToGray();
         //assert testGrayImageToBinary();
         //assert testImageFromGray();
