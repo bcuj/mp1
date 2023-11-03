@@ -114,7 +114,15 @@ public final class Encrypt {
      * @return an encoded byte array
      */
     public static byte[] oneTimePad(byte[] plainText, byte[] pad) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (plainText != null);
+        assert (pad != null);
+        assert (pad.length >= plainText.length);
+
+        byte[] cipher = new byte[plainText.length];
+        for (int i = 0; i < plainText.length; i++)
+            cipher[i] = (byte) (plainText[i] ^ pad[i]);
+
+        return cipher;
     }
 
     /**

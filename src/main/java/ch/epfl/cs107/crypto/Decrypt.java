@@ -111,7 +111,15 @@ public final class Decrypt {
      * @return decoded message
      */
     public static byte[] oneTimePad(byte[] cipher, byte[] pad) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (cipher != null);
+        assert (pad != null);
+        assert (pad.length >= cipher.length);
+
+        byte[] plainText = new byte[cipher.length];
+        for (int i = 0; i < cipher.length; i++)
+            plainText[i] = (byte) (cipher[i] ^ pad[i]);
+
+        return plainText;
     }
 
 }
