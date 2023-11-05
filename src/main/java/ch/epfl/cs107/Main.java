@@ -63,13 +63,13 @@ public final class Main {
         assert testConversionARGBInt();
         assert testPixelToGray();
         assert testGrayToBinary();
-        //assert testImageToGray();
-        //assert testGrayImageToBinary();
-        //assert testImageFromGray();
-        //assert testImageFromBinary();
+        assert testImageToGray();
+        assert testGrayImageToBinary();
+        assert testImageFromGray();
+        assert testImageFromBinary();
         Helper.dialog("Tests ", "Image manipulation passed");
-        //assert testWithRealImage("image-formats");
-        //assert testBinaryWithRealImage("image-formats");
+        assert testWithRealImage("image-formats");
+        assert testBinaryWithRealImage("image-formats");
         Helper.dialog("Tests ", "Image manipulation with images from 'image-formats' passed");
         // ========== Test Cryptography Methods ==========
         String message = "La vie est un long fleuve tranquille :-)";
