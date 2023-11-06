@@ -76,7 +76,21 @@ public final class Decrypt {
      * @return decoded message
      */
     public static byte[] cbc(byte[] cipher, byte[] iv) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (cipher != null);
+        assert (iv != null);
+
+        byte[] plainText = new byte[cipher.length];
+        //1. Iterate over the blocks
+        for (int i = 0; i < cipher.length/iv.length; i++) {
+            //2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
+            for (int j = 0; (j < iv.length) && (iv.length*i + j < cipher.length); j++) {
+                plainText[iv.length*i + j] = (byte) (cipher[iv.length*i + j] ^ iv[j]);
+                // Once the pad's j'th coordinate has been used to encrypt the i'th block, it can be replaced on the fly for the next iteration of i
+                iv[j] = plainText[j];
+            }
+        }
+
+        return plainText;
     }
 
     // ============================================================================================
@@ -90,14 +104,8 @@ public final class Decrypt {
      * @return decoded message
      */
     public static byte[] xor(byte[] cipher, byte key) {
-        assert (cipher != null);
-
-        byte[] plainText = new byte[cipher.length];
-        for (int i = 0; i < cipher.length; i++)
-            //XOR being involutive, "xor"-ing the cipher again reverts the encryption process
-            plainText[i] = (byte) (cipher[i] ^ key);
-
-        return plainText;
+        //XOR being involutive (ie. (x ^ key)^key = x, "xor()"-ing the cipher again reverts the encryption process
+        return Encrypt.xor(cipher, key);
     }
 
     // ============================================================================================
@@ -111,15 +119,9 @@ public final class Decrypt {
      * @return decoded message
      */
     public static byte[] oneTimePad(byte[] cipher, byte[] pad) {
-        assert (cipher != null);
-        assert (pad != null);
-        assert (pad.length >= cipher.length);
-
-        byte[] plainText = new byte[cipher.length];
-        for (int i = 0; i < cipher.length; i++)
-            plainText[i] = (byte) (cipher[i] ^ pad[i]);
-
-        return plainText;
+        // oneTimePad being essentially a per-character xor, it is involutive too
+        // As such to decrypt we only have to "encrypt", with the cipher acting as the plain text
+        return Encrypt.oneTimePad(cipher, pad);
     }
 
 }

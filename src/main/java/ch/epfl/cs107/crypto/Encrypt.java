@@ -79,7 +79,21 @@ public final class Encrypt {
      * @return an encoded byte array
      */
     public static byte[] cbc(byte[] plainText, byte[] iv) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert (plainText != null);
+        assert (iv != null);
+
+        byte[] cipher = new byte[plainText.length];
+        //1. Iterate over the blocks
+        for (int i = 0; i < plainText.length/iv.length; i++) {
+            //2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
+            for (int j = 0; (j < iv.length) && (iv.length*i + j < plainText.length); j++) {
+                cipher[iv.length*i + j] = (byte) (plainText[iv.length*i + j] ^ iv[j]);
+                // Once the pad's j'th coordinate has been used to encrypt the i'th block, it can be replaced on the fly for the next iteration of i
+                iv[j] = cipher[j];
+            }
+        }
+
+        return cipher;
     }
 
     // ============================================================================================

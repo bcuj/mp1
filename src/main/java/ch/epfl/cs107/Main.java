@@ -314,7 +314,7 @@ public final class Main {
         assert testXor(byteMessage, byteKey[0]);
         assert testVigenere(byteMessage, byteKey);
         assert testOneTimePad(byteMessage);
-//        assert testCBC(byteMessage, byteKey);
+        assert testCBC(byteMessage, byteKey);
     }
 
     // ============================================================================================
