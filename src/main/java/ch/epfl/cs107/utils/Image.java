@@ -107,7 +107,6 @@ public final class Image {
      * @return binary representation of a pixel
      */
     public static boolean binary(int gray, int threshold){
-        // assert(threshold <= 255 && threshold >= 0);
         assert(gray <= 255 && gray >= 0);
 
         return (gray >= threshold);
@@ -125,6 +124,7 @@ public final class Image {
      */
     public static int[][] toGray(int[][] image){
         assert (image != null);
+        if (image.length == 0) {return image;}
 
         int[][] toGrayImage = new int[image.length][image[0].length];
         for(int i = 0; i < image.length; ++i){
@@ -145,6 +145,7 @@ public final class Image {
      */
     public static boolean[][] toBinary(int[][] image, int threshold){
         assert (image != null);
+        if (image.length == 0) {return new boolean[0][];}
 
         boolean[][] toBinaryImage = new boolean[image.length][image[0].length];
         for(int i = 0; i < image.length; ++i) {
@@ -163,6 +164,7 @@ public final class Image {
      */
     public static int[][] fromGray(int[][] image){
         assert (image != null);
+        if (image.length == 0) {return image;}
 
         int[][] fromGrayImage = new int[image.length][image[0].length];
         for (int i = 0; i < image.length; ++i){
@@ -181,6 +183,7 @@ public final class Image {
      */
     public static int[][] fromBinary(boolean[][] image){
         assert(image != null);
+        if (image.length == 0) {return new int[0][];}
 
         int[][] binaryToGray = new int[image.length][image[0].length];
         for(int i = 0; i < image.length; ++i){
