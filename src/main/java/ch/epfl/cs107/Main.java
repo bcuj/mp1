@@ -303,6 +303,7 @@ public final class Main {
         byte[] decryptedAsBytes = Decrypt.cbc(result, string);
         String decryptedAsString = Text.toString(decryptedAsBytes);
         //System.out.println("Decoded : " + decryptedAsString); // uncomment to debug
+        Encrypt.cbc(new byte[0], new byte[3]);//Test when plainText is empty and iv is valid
         return Arrays.equals(string, decryptedAsBytes);
     }
 
