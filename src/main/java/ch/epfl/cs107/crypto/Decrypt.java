@@ -56,7 +56,7 @@ public final class Decrypt {
      */
     public static byte[] vigenere(byte[] cipher, byte[] keyword) {
         assert (cipher != null);
-        assert (keyword != null);
+        assert (keyword!=null && keyword.length!=0);
 
         byte[] plainText = new byte[cipher.length];
         for (int i = 0; i < cipher.length; i++)
@@ -77,17 +77,19 @@ public final class Decrypt {
      */
     public static byte[] cbc(byte[] cipher, byte[] iv) {
         assert (cipher != null);
-        assert (iv != null && iv.length != 0);
-        assert (iv.length  <= cipher.length );
+        assert (iv != null);
+        int T = iv.length;
+        assert (0<T && T<=cipher.length);
 
+        byte[] pad = iv.clone();
         byte[] plainText = new byte[cipher.length];
         //1. Iterate over the blocks
-        for (int i = 0; i < cipher.length/iv.length; i++) {
+        for (int i = 0; i < cipher.length/T; i++) {
             //2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
-            for (int j = 0; (j < iv.length) && (iv.length*i + j < cipher.length); j++) {
-                plainText[iv.length*i + j] = (byte) (cipher[iv.length*i + j] ^ iv[j]);
+            for (int j = 0; (j < T) && (T*i + j < cipher.length); j++) {
+                plainText[T*i + j] = (byte) (cipher[T*i + j] ^ pad[j]);
                 // Once the pad's j'th coordinate has been used to encrypt the i'th block, it can be replaced on the fly for the next iteration of i
-                iv[j] = plainText[j];
+                pad[j] = plainText[j];
             }
         }
 

@@ -59,7 +59,7 @@ public final class Encrypt {
      */
     public static byte[] vigenere(byte[] plainText, byte[] keyword) {
         assert (plainText != null);
-        assert (keyword != null);
+        assert (keyword!=null && keyword.length!=0);
 
         byte[] cipher = new byte[plainText.length];
         for (int i = 0; i < plainText.length; i++)
@@ -75,22 +75,24 @@ public final class Encrypt {
     /**
      * Method applying a basic chain block counter of XOR without encryption method.
      * @param plainText the byte array representing the string to encode
-     * @param iv the pad of size BLOCKSIZE we use to start the chain encoding
+     * @param T the pad of size BLOCKSIZE we use to start the chain encoding
      * @return an encoded byte array
      */
     public static byte[] cbc(byte[] plainText, byte[] iv) {
         assert (plainText != null);
-        assert (iv != null && iv.length != 0);
-        assert (iv.length <= plainText.length );
+        assert (iv != null);
+        int T = iv.length;
+        assert (0<T && T<=plainText.length);
 
+        byte[] pad = iv.clone(); //Avoid modifying arguments
         byte[] cipher = new byte[plainText.length];
         //1. Iterate over the blocks
-        for (int i = 0; i < plainText.length/iv.length; i++) {
+        for (int i = 0; i < plainText.length/T; i++) {
             //2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
-            for (int j = 0; (j < iv.length) && (iv.length*i + j < plainText.length); j++) {
-                cipher[iv.length*i + j] = (byte) (plainText[iv.length*i + j] ^ iv[j]);
+            for (int j = 0; (j < T) && (T*i + j < plainText.length); j++) {
+                cipher[T*i + j] = (byte) (plainText[T*i + j] ^ pad[j]);
                 // Once the pad's j'th coordinate has been used to encrypt the i'th block, it can be replaced on the fly for the next iteration of i
-                iv[j] = cipher[j];
+                pad[j] = cipher[j];
             }
         }
 
@@ -109,6 +111,7 @@ public final class Encrypt {
      */
     public static byte[] xor(byte[] plainText, byte key) {
         assert (plainText != null);
+        // No assertion are needed on `key` because it's a primitive type and thus can't be used with invalid input
 
         byte[] cipher = new byte[plainText.length];
         for (int i = 0; i < plainText.length; i++)
@@ -130,8 +133,7 @@ public final class Encrypt {
      */
     public static byte[] oneTimePad(byte[] plainText, byte[] pad) {
         assert (plainText != null);
-        assert (pad != null);
-        assert (pad.length >= plainText.length);
+        assert (pad!=null && pad.length>=plainText.length);
 
         byte[] cipher = new byte[plainText.length];
         for (int i = 0; i < plainText.length; i++)
@@ -147,11 +149,9 @@ public final class Encrypt {
      * @param result Array containing the result after the execution
      */
     public static void oneTimePad(byte[] plainText, byte[] pad, byte[] result) {
-        assert (plainText != null);
-        assert (pad != null);
         assert (result != null);
-        assert (pad.length >= plainText.length);
-        assert (plainText.length == result.length);
+        assert (plainText!=null && plainText.length==result.length);
+        assert (pad!=null && pad.length>=plainText.length);
 
         for (int i = 0; i < plainText.length; i++)
             result[i] = (byte) (plainText[i] ^ pad[i]);
