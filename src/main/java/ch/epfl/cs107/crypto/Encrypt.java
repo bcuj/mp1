@@ -113,7 +113,7 @@ public final class Encrypt {
      */
     public static byte[] xor(byte[] plainText, byte key) {
         assert (plainText != null);
-        // No assertion are needed on `key` because it's a primitive type and thus can't be used with invalid input
+        // No assertion is needed on `key` because it's a primitive type and thus can't be used with invalid input
 
         byte[] cipher = new byte[plainText.length];
         for (int i = 0; i < plainText.length; i++)
