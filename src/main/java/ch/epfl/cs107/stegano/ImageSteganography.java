@@ -30,23 +30,25 @@ public final class ImageSteganography {
     /**
      * Embed an ARGB image on another ARGB image (the cover)
      * @param cover Cover image
-     * @param image Embedded image
+     * @param argbImage Embedded image
      * @param threshold threshold to use for binary conversion
      * @return ARGB image with the image embedded on the cover
      */
     public static int[][] embedARGB(int[][] cover, int[][] argbImage, int threshold){
-        return Helper.fail("NOT IMPLEMENTED");
+        int[][] argbToGray = toGray(argbImage);
+        return embedGray(cover, argbToGray, threshold);
     }
 
     /**
      * Embed a Gray scaled image on another ARGB image (the cover)
      * @param cover Cover image
-     * @param image Embedded image
+     * @param grayImage Embedded image
      * @param threshold threshold to use for binary conversion
      * @return ARGB image with the image embedded on the cover
      */
     public static int[][] embedGray(int[][] cover, int[][] grayImage, int threshold){
-        return Helper.fail("NOT IMPLEMENTED");
+        boolean[][] grayImageToBinary = toBinary(grayImage, threshold);
+        return embedBW(cover, grayImageToBinary);
     }
 
     /**
@@ -56,7 +58,20 @@ public final class ImageSteganography {
      * @return ARGB image with the image embedded on the cover
      */
     public static int[][] embedBW(int[][] cover, boolean[][] load){
-        return Helper.fail("NOT IMPLEMENTED");
+        assert(load.length <= cover.length);
+        assert(load[0].length <= cover[0].length);
+
+        int[][] embeddedBwImage = new int[cover.length][cover[0].length];
+        for(int i = 0; i < cover.length; ++i){
+            for(int j = 0; j < cover[i].length; ++j){
+                if(i < load.length && i < load[0].length) {
+                    embeddedBwImage[i][j] = embedInLSB(cover[i][j], load[i][j]);
+                }else {
+                    embeddedBwImage[i][j] = cover[i][j];
+                }
+            }
+        }
+        return embeddedBwImage;
     }
 
     // ============================================================================================
