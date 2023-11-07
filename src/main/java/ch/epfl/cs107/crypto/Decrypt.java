@@ -79,16 +79,15 @@ public final class Decrypt {
         assert (cipher != null);
         assert (iv != null);
         int T = iv.length;
-        assert (0<T && T<=cipher.length);
+        assert (T > 0);
 
         byte[] pad = iv.clone();
         byte[] plainText = new byte[cipher.length];
-        //1. Iterate over the blocks
-        for (int i = 0; i < cipher.length/T; i++) {
-            //2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
+        int numberOfBlocks = (plainText.length < T) ? 1 : plainText.length / T;
+
+        for (int i = 0; i < numberOfBlocks; i++) {
             for (int j = 0; (j < T) && (T*i + j < cipher.length); j++) {
                 plainText[T*i + j] = (byte) (cipher[T*i + j] ^ pad[j]);
-                // Once the pad's j'th coordinate has been used to encrypt the i'th block, it can be replaced on the fly for the next iteration of i
                 pad[j] = plainText[j];
             }
         }

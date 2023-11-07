@@ -75,23 +75,25 @@ public final class Encrypt {
     /**
      * Method applying a basic chain block counter of XOR without encryption method.
      * @param plainText the byte array representing the string to encode
-     * @param T the pad of size BLOCKSIZE we use to start the chain encoding
+     * @param iv the pad of size BLOCKSIZE we use to start the chain encoding
      * @return an encoded byte array
      */
     public static byte[] cbc(byte[] plainText, byte[] iv) {
         assert (plainText != null);
         assert (iv != null);
         int T = iv.length;
-        assert (0<T && T<=plainText.length);
+        assert (T > 0);
 
-        byte[] pad = iv.clone(); //Avoid modifying arguments
+        byte[] pad = iv.clone(); //← Avoid modifying arguments
         byte[] cipher = new byte[plainText.length];
-        //1. Iterate over the blocks
-        for (int i = 0; i < plainText.length/T; i++) {
-            //2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
+        //↓ We want the `for` loop to run once even if the IV is bigger than the plain text
+        int numberOfBlocks = (plainText.length < T) ? 1 : plainText.length / T;
+        //↓1. Iterate over the blocks
+        for (int i = 0; i < numberOfBlocks; i++) {
+            //↓2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
             for (int j = 0; (j < T) && (T*i + j < plainText.length); j++) {
                 cipher[T*i + j] = (byte) (plainText[T*i + j] ^ pad[j]);
-                // Once the pad's j'th coordinate has been used to encrypt the i'th block, it can be replaced on the fly for the next iteration of i
+                //↓ Once the pad's j'th coordinate has been used to encrypt the i'th block, it can be replaced on the fly for the next iteration of i
                 pad[j] = cipher[j];
             }
         }
@@ -133,7 +135,7 @@ public final class Encrypt {
      */
     public static byte[] oneTimePad(byte[] plainText, byte[] pad) {
         assert (plainText != null);
-        assert (pad!=null && pad.length!=plainText.length);
+        assert (pad!=null && pad.length==plainText.length);
 
         byte[] cipher = new byte[plainText.length];
         for (int i = 0; i < plainText.length; i++)
