@@ -88,7 +88,7 @@ public final class Decrypt {
         for (int i = 0; i < numberOfBlocks; i++) {
             for (int j = 0; (j < T) && (T*i + j < cipher.length); j++) {
                 plainText[T*i + j] = (byte) (cipher[T*i + j] ^ pad[j]);
-                pad[j] = plainText[j];
+                pad[j] = plainText[T*i + j];
             }
         }
 

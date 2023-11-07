@@ -93,8 +93,8 @@ public final class Encrypt {
             //↓2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
             for (int j = 0; (j < T) && (T*i + j < plainText.length); j++) {
                 cipher[T*i + j] = (byte) (plainText[T*i + j] ^ pad[j]);
-                //↓ Once the pad's j'th coordinate has been used to encrypt the i'th block, it can be replaced on the fly for the next iteration of i
-                pad[j] = cipher[j];
+                //↓ Once the pad's j'th coordinate has been used to encrypt the i'th block's j'th coordinate, it can be replaced on the fly with the newly found value for the next iteration of i
+                pad[j] = cipher[T*i + j];
             }
         }
 
