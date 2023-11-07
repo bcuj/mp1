@@ -107,7 +107,7 @@ public final class Image {
      * @return binary representation of a pixel
      */
     public static boolean binary(int gray, int threshold){
-        assert(threshold <= 255 && threshold >= 0);
+        // assert(threshold <= 255 && threshold >= 0);
         assert(gray <= 255 && gray >= 0);
 
         return (gray >= threshold);
@@ -124,10 +124,11 @@ public final class Image {
      * @return the gray scale version of the image
      */
     public static int[][] toGray(int[][] image){
-        assert(image != null);
+        assert (image != null);
 
         int[][] toGrayImage = new int[image.length][image[0].length];
         for(int i = 0; i < image.length; ++i){
+            assert (image[i] != null);
             for(int j = 0; j < image[i].length; ++j){
                 toGrayImage[i][j] = gray(image[i][j]);
             }
@@ -143,13 +144,13 @@ public final class Image {
      * @return binary representation of the image
      */
     public static boolean[][] toBinary(int[][] image, int threshold){
-        assert(image != null);
+        assert (image != null);
 
         boolean[][] toBinaryImage = new boolean[image.length][image[0].length];
-        for(int i = 0; i < image.length; ++i){
-            for(int j = 0; j < image[i].length; ++j){
+        for(int i = 0; i < image.length; ++i) {
+            assert (image[i] != null);
+            for (int j = 0; j < image[i].length; ++j)
                 toBinaryImage[i][j] = binary(image[i][j], threshold);
-            }
         }
         return toBinaryImage;
     }
@@ -161,13 +162,13 @@ public final class Image {
      * @return <b>gray ARGB</b> representation
      */
     public static int[][] fromGray(int[][] image){
-        assert(image != null);
+        assert (image != null);
 
         int[][] fromGrayImage = new int[image.length][image[0].length];
         for (int i = 0; i < image.length; ++i){
-            for (int j = 0; j < image[i].length; ++j){
+            assert (image[i] != null);
+            for (int j = 0; j < image[i].length; ++j)
                 fromGrayImage[i][j] = argb((byte)0xFF, (byte) image[i][j], (byte) image[i][j], (byte) image[i][j]);
-            }
         }
         return fromGrayImage;
     }
@@ -182,18 +183,13 @@ public final class Image {
         assert(image != null);
 
         int[][] binaryToGray = new int[image.length][image[0].length];
-        int[][] fromBinaryImage = new int[image.length][image[0].length];
         for(int i = 0; i < image.length; ++i){
-            for(int j = 0; j < image[i].length; ++j){
-                if (image[i][j]){
-                    binaryToGray[i][j] = 255;
-                } else {
-                   binaryToGray[i][j] = 0;
-                }
-            }
+            assert (image[i] != null);
+            for(int j = 0; j < image[i].length; ++j)
+                binaryToGray[i][j] = (image[i][j]) ? 255 : 0;
         }
-        fromBinaryImage = fromGray(binaryToGray);
-        return fromBinaryImage;
+
+        return fromGray(binaryToGray);
     }
 
 }
