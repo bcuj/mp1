@@ -133,7 +133,7 @@ public final class Encrypt {
      */
     public static byte[] oneTimePad(byte[] plainText, byte[] pad) {
         assert (plainText != null);
-        assert (pad!=null && pad.length>=plainText.length);
+        assert (pad!=null && pad.length!=plainText.length);
 
         byte[] cipher = new byte[plainText.length];
         for (int i = 0; i < plainText.length; i++)
@@ -151,7 +151,7 @@ public final class Encrypt {
     public static void oneTimePad(byte[] plainText, byte[] pad, byte[] result) {
         assert (result != null);
         assert (plainText!=null && plainText.length==result.length);
-        assert (pad!=null && pad.length>=plainText.length);
+        assert (pad!=null && pad.length!=plainText.length);
 
         for (int i = 0; i < plainText.length; i++)
             result[i] = (byte) (plainText[i] ^ pad[i]);
