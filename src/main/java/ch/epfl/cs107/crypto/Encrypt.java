@@ -80,7 +80,8 @@ public final class Encrypt {
      */
     public static byte[] cbc(byte[] plainText, byte[] iv) {
         assert (plainText != null);
-        assert (iv != null);
+        assert (iv != null && iv.length != 0);
+        assert (iv.length <= plainText.length );
 
         byte[] cipher = new byte[plainText.length];
         //1. Iterate over the blocks

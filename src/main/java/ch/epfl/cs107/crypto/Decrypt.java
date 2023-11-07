@@ -77,7 +77,8 @@ public final class Decrypt {
      */
     public static byte[] cbc(byte[] cipher, byte[] iv) {
         assert (cipher != null);
-        assert (iv != null);
+        assert (iv != null && iv.length != 0);
+        assert (iv.length  <= cipher.length );
 
         byte[] plainText = new byte[cipher.length];
         //1. Iterate over the blocks
