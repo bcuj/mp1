@@ -35,13 +35,8 @@ public final class Decrypt {
      * @return decoded message
      */
     public static byte[] caesar(byte[] cipher, byte key) {
-        assert (cipher != null);
-
-        byte[] plainText = new byte[cipher.length];
-        for (int i = 0; i < cipher.length; i++)
-            plainText[i] = (byte) (cipher[i] - key);
-
-        return plainText;
+        // To decrypt a caesar cipher, we can apply the encryption algorithm, but passing the opposite of the encryption key as our key
+        return Encrypt.caesar(cipher, (byte) (-1 * key));
     }
 
     // ============================================================================================
