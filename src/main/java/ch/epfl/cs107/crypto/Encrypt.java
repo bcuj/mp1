@@ -86,7 +86,7 @@ public final class Encrypt {
 
         byte[] pad = iv.clone(); //← Avoid modifying arguments
         byte[] cipher = new byte[plainText.length];
-        //↓ We want the `for` loop to run once even if the IV is bigger than the plain text
+        //↓ Should the IV be bigger than the plain text, we want the `for` loop to run exactly once
         int numberOfBlocks = (plainText.length < T) ? 1 : plainText.length / T;
         //↓1. Iterate over the blocks
         for (int i = 0; i < numberOfBlocks; i++) {
