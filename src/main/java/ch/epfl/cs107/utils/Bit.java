@@ -65,8 +65,7 @@ public final class Bit {
      * @return <code>true</code> if the bit is '1' and <code>false</code> otherwise
      */
     public static boolean getXthBit(int value, int pos) {
-        assert (pos < Integer.SIZE);
-        assert (pos >= 0);
+        assert (0<=pos && pos < Integer.SIZE);
 
         int shiftedValue = value >>> pos;
         return (shiftedValue & 0b1) == 1;
@@ -104,9 +103,8 @@ public final class Bit {
      */
     public static boolean[] toBitArray(byte value){
         boolean[] bitArray = new boolean[Byte.SIZE];
-        for(int i = 0; i < Byte.SIZE; ++i){
+        for (int i = 0; i < Byte.SIZE; ++i)
             bitArray[i] = getXthBit(value, Byte.SIZE-i-1);
-        }
 
         return bitArray;
     }
