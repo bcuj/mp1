@@ -58,6 +58,8 @@ public final class ImageSteganography {
      * @return ARGB image with the image embedded on the cover
      */
     public static int[][] embedBW(int[][] cover, boolean[][] load){
+        assert(cover != null && load != null);
+        assert ((cover.length != 0) && (load.length != 0));
         assert(load.length <= cover.length);
         assert(load[0].length <= cover[0].length);
 
@@ -84,7 +86,15 @@ public final class ImageSteganography {
      * @return binary representation of the hidden image
      */
     public static boolean[][] revealBW(int[][] image) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert(image != null);
+        assert(image.length != 0);
+        boolean[][] revealedImage = new boolean[image.length][image[0].length];
+        for(int i = 0; i < image.length; ++i){
+            for(int j = 0; j < image[0].length; ++j){
+                revealedImage[i][j] = getLSB(image[i][j]);
+            }
+        }
+        return revealedImage;
     }
 
 }

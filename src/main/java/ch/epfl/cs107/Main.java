@@ -369,4 +369,5 @@ public final class Main {
         return Arrays.deepEquals(ImageSteganography.embedARGB(cover, image, IMAGE_THRESHOLD), hidden);
     }
 
+
 }
