@@ -42,6 +42,7 @@ public final class Image {
         int shiftedGreen = Byte.toUnsignedInt(green) << 8;
         int shiftedBlue = Byte.toUnsignedInt(blue);
 
+        // After that all we have to do is to "add up" everything using a sequence of ORs
         return (shiftedAlpha | shiftedRed | shiftedGreen | shiftedBlue);
     }
 
@@ -92,11 +93,11 @@ public final class Image {
      * @return gray scaling of the given pixel
      */
     public static int gray(int pixel){
-        int redInt = Byte.toUnsignedInt(red(pixel));
-        int greenInt = Byte.toUnsignedInt(green(pixel));
-        int blueInt = Byte.toUnsignedInt(blue(pixel));
+        int redAsInt = Byte.toUnsignedInt(red(pixel));
+        int greenAsInt = Byte.toUnsignedInt(green(pixel));
+        int blueAsInt = Byte.toUnsignedInt(blue(pixel));
 
-        return (redInt + greenInt + blueInt) / 3;
+        return (redAsInt + greenAsInt + blueAsInt) / 3;
     }
 
     /**
@@ -125,13 +126,12 @@ public final class Image {
     public static int[][] toGray(int[][] image){
         assert (image != null);
         if (image.length == 0) {return image;}
-
+        //↑This case separation allows for us to use this↓ lookup without going OutOfBounds
         int[][] toGrayImage = new int[image.length][image[0].length];
         for(int i = 0; i < image.length; ++i){
             assert (image[i] != null);
-            for(int j = 0; j < image[i].length; ++j){
+            for(int j = 0; j < image[i].length; ++j)
                 toGrayImage[i][j] = gray(image[i][j]);
-            }
         }
         return toGrayImage;
     }
@@ -191,7 +191,6 @@ public final class Image {
             for(int j = 0; j < image[i].length; ++j)
                 binaryToGray[i][j] = (image[i][j]) ? 255 : 0;
         }
-
         return fromGray(binaryToGray);
     }
 
