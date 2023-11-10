@@ -125,12 +125,15 @@ public final class Image {
      */
     public static int[][] toGray(int[][] image){
         assert (image != null);
-        if (image.length == 0) {return image;}
+//        if (image.length == 0) {return image;}
         //↑This case separation allows for us to use this↓ lookup without going OutOfBounds
-        int[][] toGrayImage = new int[image.length][image[0].length];
-        for(int i = 0; i < image.length; ++i){
+        //(when the image is empty, its grayscale version must be empty too)
+        int[][] toGrayImage = new int[image.length][];//image[0].length];
+        for (int i = 0; i < image.length; ++i){
             assert (image[i] != null);
-            for(int j = 0; j < image[i].length; ++j)
+
+            toGrayImage[i] = new int[image[i].length];
+            for (int j = 0; j < image[i].length; ++j)
                 toGrayImage[i][j] = gray(image[i][j]);
         }
         return toGrayImage;
@@ -145,10 +148,11 @@ public final class Image {
      */
     public static boolean[][] toBinary(int[][] image, int threshold){
         assert (image != null);
+        //↓Here the return type being different, we create an empty bit array on the fly
         if (image.length == 0) {return new boolean[0][];}
 
         boolean[][] toBinaryImage = new boolean[image.length][image[0].length];
-        for(int i = 0; i < image.length; ++i) {
+        for (int i = 0; i < image.length; ++i) {
             assert (image[i] != null);
             for (int j = 0; j < image[i].length; ++j)
                 toBinaryImage[i][j] = binary(image[i][j], threshold);
@@ -182,13 +186,13 @@ public final class Image {
      * @return <b>black and white ARGB</b> representation
      */
     public static int[][] fromBinary(boolean[][] image){
-        assert(image != null);
+        assert (image != null);
         if (image.length == 0) {return new int[0][];}
 
         int[][] binaryToGray = new int[image.length][image[0].length];
-        for(int i = 0; i < image.length; ++i){
+        for (int i = 0; i < image.length; ++i){
             assert (image[i] != null);
-            for(int j = 0; j < image[i].length; ++j)
+            for (int j = 0; j < image[i].length; ++j)
                 binaryToGray[i][j] = (image[i][j]) ? 255 : 0;
         }
         return fromGray(binaryToGray);
