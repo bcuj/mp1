@@ -54,7 +54,7 @@ public final class Decrypt {
         assert (keyword!=null && keyword.length!=0);
 
         byte[] plainText = new byte[cipher.length];
-        for (int i = 0; i < cipher.length; i++)
+        for (int i = 0; i < cipher.length; ++i)
             plainText[i] = (byte) (cipher[i] - keyword[i % keyword.length]);
 
         return plainText;
@@ -78,13 +78,13 @@ public final class Decrypt {
 
         byte[] plainText = new byte[cipher.length];
         //A. The first block is decrypted using the original IV
-        for (int i = 0; i < T; i++)
+        for (int i = 0; i < T; ++i)
             plainText[i] = (byte) (cipher[i] ^ iv[i]);
 
         int numberOfBlocks = (plainText.length < T) ? 1 : plainText.length / T;
         //B. All blocks except the first are then decrypted using the cipher's previous block
-        for (int i = 1; i < numberOfBlocks; i++) {
-            for (int j = 0; (j < T) && (T*i + j < cipher.length); j++)
+        for (int i = 1; i < numberOfBlocks; ++i) {
+            for (int j = 0; (j < T) && (T*i + j < cipher.length); ++j)
                 plainText[T*i + j] = (byte) (cipher[T*i + j] ^ cipher[T*(i-1) + j]);
         }
 

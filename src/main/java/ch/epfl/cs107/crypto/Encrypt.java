@@ -39,7 +39,7 @@ public final class Encrypt {
         assert (plainText != null);
 
         byte[] cipher = new byte[plainText.length];
-        for (int i = 0; i < plainText.length; i++)
+        for (int i = 0; i < plainText.length; ++i)
             cipher[i] = (byte) (plainText[i] + key);
 
         return cipher;
@@ -62,7 +62,7 @@ public final class Encrypt {
         assert (keyword!=null && keyword.length!=0);
 
         byte[] cipher = new byte[plainText.length];
-        for (int i = 0; i < plainText.length; i++)
+        for (int i = 0; i < plainText.length; ++i)
             cipher[i] = (byte) (plainText[i] + keyword[i % keyword.length]);
 
         return cipher;
@@ -89,9 +89,9 @@ public final class Encrypt {
         //↓ Should the IV be bigger than the plain text, we want the `for` loop to run exactly once
         int numberOfBlocks = (plainText.length < T) ? 1 : plainText.length / T;
         //↓1. Iterate over the blocks
-        for (int i = 0; i < numberOfBlocks; i++) {
+        for (int i = 0; i < numberOfBlocks; ++i) {
             //↓2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
-            for (int j = 0; (j < T) && (T*i + j < plainText.length); j++) {
+            for (int j = 0; (j < T) && (T*i + j < plainText.length); ++j) {
                 cipher[T*i + j] = (byte) (plainText[T*i + j] ^ pad[j]);
                 //↓ Once the pad's j'th coordinate has been used to encrypt the i'th block's j'th coordinate, it can be replaced on the fly with the newly found value for the next iteration of i
                 pad[j] = cipher[T*i + j];
@@ -116,7 +116,7 @@ public final class Encrypt {
         // No assertion is needed on `key` because it's a primitive type and thus can't be used with invalid input
 
         byte[] cipher = new byte[plainText.length];
-        for (int i = 0; i < plainText.length; i++)
+        for (int i = 0; i < plainText.length; ++i)
             cipher[i] = (byte) (plainText[i] ^ key);
 
         return cipher;
@@ -138,7 +138,7 @@ public final class Encrypt {
         assert (pad!=null && pad.length==plainText.length);
 
         byte[] cipher = new byte[plainText.length];
-        for (int i = 0; i < plainText.length; i++)
+        for (int i = 0; i < plainText.length; ++i)
             cipher[i] = (byte) (plainText[i] ^ pad[i]);
 
         return cipher;
@@ -155,7 +155,7 @@ public final class Encrypt {
         assert (plainText!=null && plainText.length==result.length);
         assert (pad!=null && pad.length!=plainText.length);
 
-        for (int i = 0; i < plainText.length; i++)
+        for (int i = 0; i < plainText.length; ++i)
             result[i] = (byte) (plainText[i] ^ pad[i]);
     }
 

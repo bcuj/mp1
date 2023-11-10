@@ -135,7 +135,7 @@ public final class Bit {
         int sum = bitArray[0] ? (-1*(int) Math.pow(2, Byte.SIZE-1)) : 0;
 
         // Iterate through the rest of the byte "normally"
-        for (int i = 1; i < Byte.SIZE; i++) {
+        for (int i = 1; i < Byte.SIZE; ++i) {
             if (bitArray[i])
                 sum += (int) Math.pow(2, Byte.SIZE-1-i);
         }
