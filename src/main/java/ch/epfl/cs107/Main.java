@@ -75,12 +75,12 @@ public final class Main {
         String message = "La vie est un long fleuve tranquille :-)";
         String key = "2cF%5";
         testCrypto(message, key);
-        //message = Text.toString(Helper.read("text_one.txt"));
-        //testCrypto(message, key);
+        message = Text.toString(Helper.read("text_one.txt"));
+        System.out.println(message);
         Helper.dialog("Tests ", "Cryptography passed");
         // ========== Test Steganography Methods ==========
         assert testEmbedBWImage();
-        //assert testEmbedText();
+        assert testEmbedText();
         assert testImageSteganographyWithImages("the-starry-night");
         Helper.dialog("Tests ", "ImageSteganography passed");
     }

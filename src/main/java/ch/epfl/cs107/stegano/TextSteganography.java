@@ -1,6 +1,7 @@
 package ch.epfl.cs107.stegano;
 
 import ch.epfl.cs107.Helper;
+import ch.epfl.cs107.utils.Bit;
 
 import static ch.epfl.cs107.utils.Text.*;
 import static ch.epfl.cs107.utils.Image.*;
@@ -34,7 +35,21 @@ public class TextSteganography {
      * @return ARGB image with the message embedded
      */
     public static int[][] embedBitArray(int[][] cover, boolean[] message) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert(cover != null && message != null);
+
+        int[][] bitArrayEmbedded = new int[cover.length][cover[0].length];
+        for(int i = 0; i < cover.length; ++i){
+            assert(cover[i] != null);
+            assert(cover[0].length == cover[i].length);
+            for(int j = 0; j < cover[0].length; ++j){
+                if (j + cover[0].length * i < message.length ) {
+                    bitArrayEmbedded[i][j] = embedInLSB(cover[i][j], message[j + cover[0].length * i]);
+                } else {
+                    bitArrayEmbedded[i][j] = cover[i][j];
+                }
+            }
+        }
+        return bitArrayEmbedded;
     }
 
     /**
@@ -43,7 +58,18 @@ public class TextSteganography {
      * @return extracted message
      */
     public static boolean[] revealBitArray(int[][] image) {
-        return Helper.fail("NOT IMPLEMENTED");
+        assert(image != null);
+        if(image.length == 0) {return new boolean[0];}
+
+        boolean[] extractedMessage = new boolean[image.length * image[0].length];
+        for(int i = 0; i < image.length; ++i){
+            assert(image[i] != null);
+            assert(image[0].length == image[i].length);
+            for(int j = 0; j < image[0].length; ++j){
+                extractedMessage[j + image[0].length * i] = getLSB(image[i][j]);
+            }
+        }
+        return extractedMessage;
     }
 
 
@@ -59,7 +85,8 @@ public class TextSteganography {
      * @return ARGB image with the message embedded
      */
     public static int[][] embedText(int[][] cover, byte[] message) {
-        return Helper.fail("NOT IMPLEMENTED");
+        boolean[]  messageEmbedded= Bit.toBitArray(message);
+        return embedBitArray(cover, messageEmbedded);
     }
 
     /**
@@ -68,7 +95,7 @@ public class TextSteganography {
      * @return extracted message
      */
     public static byte[] revealText(int[][] image) {
-        return Helper.fail("NOT IMPLEMENTED");
+        boolean[] revealedBitArray = revealBitArray(image);
+        return Bit.toBytes(revealedBitArray);
     }
-
 }

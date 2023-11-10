@@ -66,7 +66,7 @@ public final class ImageSteganography {
         int[][] embeddedBwImage = new int[cover.length][cover[0].length];
         for(int i = 0; i < cover.length; ++i){
             for(int j = 0; j < cover[i].length; ++j){
-                if(i < load.length && i < load[0].length) {
+                if(i < load.length && j < load[0].length) {
                     embeddedBwImage[i][j] = embedInLSB(cover[i][j], load[i][j]);
                 }else {
                     embeddedBwImage[i][j] = cover[i][j];

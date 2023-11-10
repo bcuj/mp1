@@ -112,6 +112,22 @@ public final class Bit {
     }
 
     /**
+     * Convert a given byte array into a boolean array
+     * @param byteArray array to convert
+     * @return byte array in the <b>bit array</b> format
+     */
+    public static boolean[] toBitArray(byte[] byteArray){
+        boolean[] byteAsBits; //Temporary byte containing new bits to unpack at each iteration
+        boolean[] bitArray = new boolean[byteArray.length * Byte.SIZE];
+        for (int i = 0; i < byteArray.length; ++i) {
+            byteAsBits = Bit.toBitArray(byteArray[i]);
+            for (int j = 0; j < Byte.SIZE; ++j)
+                bitArray[Byte.SIZE * i + j] = byteAsBits[j];
+        }
+        return bitArray;
+    }
+
+    /**
      * Convert a boolean array to a byte
      * <p>
      * Suppose we have the following input :
@@ -143,4 +159,12 @@ public final class Bit {
         return (byte) sum;
     }
 
+    public static byte[] toBytes(boolean[] bitArray){
+        byte[] byteArray = new byte[bitArray.length/Byte.SIZE]; //Integer division to avoid reading any trailing bits
+        for (int i = 0; i < byteArray.length; ++i) {
+            boolean[] charAsBitArray = java.util.Arrays.copyOfRange(bitArray, Byte.SIZE*i, Byte.SIZE*(i+1));
+            byteArray[i] = Bit.toByte(charAsBitArray);
+        }
+        return byteArray;
+    }
 }
