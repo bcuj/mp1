@@ -47,17 +47,7 @@ public final class Text {
      */
     public static boolean[] toBitArray(String str) {
         assert (str != null);
-        byte[] stringAsBytes = toBytes(str);
-
-        boolean[] byteAsBits; //Temporary byte containing new bits to unpack at each iteration
-        boolean[] bitArray = new boolean[stringAsBytes.length * Byte.SIZE];
-        for (int i = 0; i < stringAsBytes.length; ++i) {
-            byteAsBits = Bit.toBitArray(stringAsBytes[i]);
-            for (int j = 0; j < Byte.SIZE; ++j)
-                bitArray[Byte.SIZE * i + j] = byteAsBits[j];
-        }
-
-        return bitArray;
+        return Bit.toBitArray(toBytes(str));
     }
 
     /**
@@ -76,16 +66,6 @@ public final class Text {
      */
     public static String toString(boolean[] bitArray) {
         assert (bitArray != null);
-
-        //1. Convert bit array to byte array, char-by-char
-        byte[] byteArray = new byte[bitArray.length/Byte.SIZE]; //Integer division to avoid reading any trailing bits
-        for (int i = 0; i < byteArray.length; ++i) {
-            boolean[] charAsBitArray = java.util.Arrays.copyOfRange(bitArray, Byte.SIZE*i, Byte.SIZE*(i+1));
-            byteArray[i] = Bit.toByte(charAsBitArray);
-        }
-
-        //2. Convert byte array to String
-        return toString(byteArray);
+        return toString(Bit.toBytes(bitArray));
     }
-
 }
