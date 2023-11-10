@@ -76,15 +76,16 @@ public final class Decrypt {
         int T = iv.length;
         assert (T > 0);
 
-        byte[] pad = iv.clone();
         byte[] plainText = new byte[cipher.length];
-        int numberOfBlocks = (plainText.length < T) ? 1 : plainText.length / T;
+        //A. The first block is decrypted using the original IV
+        for (int i = 0; i < T; i++)
+            plainText[i] = (byte) (cipher[i] ^ iv[i]);
 
-        for (int i = 0; i < numberOfBlocks; i++) {
-            for (int j = 0; (j < T) && (T*i + j < cipher.length); j++) {
-                plainText[T*i + j] = (byte) (cipher[T*i + j] ^ pad[j]);
-                pad[j] = plainText[T*i + j];
-            }
+        int numberOfBlocks = (plainText.length < T) ? 1 : plainText.length / T;
+        //B. All blocks except the first are then decrypted using the cipher's previous block
+        for (int i = 1; i < numberOfBlocks; i++) {
+            for (int j = 0; (j < T) && (T*i + j < cipher.length); j++)
+                plainText[T*i + j] = (byte) (cipher[T*i + j] ^ cipher[T*(i-1) + j]);
         }
 
         return plainText;
