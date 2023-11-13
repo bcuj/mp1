@@ -77,11 +77,6 @@ public final class Decrypt {
         assert (T > 0);
 
         byte[] plainText = new byte[cipher.length];
-/*
-        //A. The first block is decrypted using the original IV
-        for (int i = 0; (i<T && i<cipher.length); ++i) //This second condition
-            plainText[i] = (byte) (cipher[i] ^ iv[i]);
-*/
 
         int numberOfBlocks = (int) Math.ceil((double) plainText.length/T); //+ .length%T; //.length < T) ? 1 : plainText.length / T;
         for (int i = 0; i < numberOfBlocks; ++i) {

@@ -37,6 +37,7 @@ public final class Image {
      * @return packed value of the pixel
      */
     public static int argb(byte alpha, byte red, byte green, byte blue){
+        // First we shift each color channel by an incrementing number of empty bytes to prevent them from overlapping
         int shiftedAlpha = Byte.toUnsignedInt(alpha) << 24;
         int shiftedRed = Byte.toUnsignedInt(red) << 16;
         int shiftedGreen = Byte.toUnsignedInt(green) << 8;
@@ -93,23 +94,22 @@ public final class Image {
      * @return gray scaling of the given pixel
      */
     public static int gray(int pixel){
-        int redAsInt = Byte.toUnsignedInt(red(pixel));
-        int greenAsInt = Byte.toUnsignedInt(green(pixel));
-        int blueAsInt = Byte.toUnsignedInt(blue(pixel));
+        int unsignedRed = Byte.toUnsignedInt(red(pixel));
+        int unsignedGreen = Byte.toUnsignedInt(green(pixel));
+        int unsignedBlue = Byte.toUnsignedInt(blue(pixel));
 
-        return (redAsInt + greenAsInt + blueAsInt) / 3;
+        return (unsignedRed + unsignedGreen + unsignedBlue) / 3;
     }
 
     /**
-     * Compute the binary representation of a given pixel.
+     * Compute the binary representation of a given pixels.
      *
      * @param gray gray scale value of the given pixel
      * @param threshold when to consider a pixel white
      * @return binary representation of a pixel
      */
     public static boolean binary(int gray, int threshold){
-        assert(gray <= 255 && gray >= 0);
-
+        assert (0<=gray && gray<=255);
         return (gray >= threshold);
     }
 
@@ -125,18 +125,18 @@ public final class Image {
      */
     public static int[][] toGray(int[][] image){
         assert (image != null);
-//        if (image.length == 0) {return image;}
-        //↑This case separation allows for us to use this↓ lookup without going OutOfBounds
-        //(when the image is empty, its grayscale version must be empty too)
-        int[][] toGrayImage = new int[image.length][];//image[0].length];
+
+        int[][] grayImage = new int[image.length][];
         for (int i = 0; i < image.length; ++i){
             assert (image[i] != null);
 
-            toGrayImage[i] = new int[image[i].length];
+            // The inner arrays are initialized on the fly in order not to call `image[0].length` before checking this attribute exists
+            grayImage[i] = new int[image[i].length];
             for (int j = 0; j < image[i].length; ++j)
-                toGrayImage[i][j] = gray(image[i][j]);
+                grayImage[i][j] = gray(image[i][j]);
         }
-        return toGrayImage;
+
+        return grayImage;
     }
 
     /**
@@ -148,16 +148,17 @@ public final class Image {
      */
     public static boolean[][] toBinary(int[][] image, int threshold){
         assert (image != null);
-        //↓Here the return type being different, we create an empty bit array on the fly
-        if (image.length == 0) {return new boolean[0][];}
 
-        boolean[][] toBinaryImage = new boolean[image.length][image[0].length];
+        boolean[][] imageAsBinary = new boolean[image.length][];
         for (int i = 0; i < image.length; ++i) {
             assert (image[i] != null);
+
+            imageAsBinary[i] = new boolean[image[i].length];
             for (int j = 0; j < image[i].length; ++j)
-                toBinaryImage[i][j] = binary(image[i][j], threshold);
+                imageAsBinary[i][j] = binary(image[i][j], threshold);
         }
-        return toBinaryImage;
+
+        return imageAsBinary;
     }
 
     /**
@@ -168,30 +169,32 @@ public final class Image {
      */
     public static int[][] fromGray(int[][] image){
         assert (image != null);
-        if (image.length == 0) {return image;}
 
-        int[][] fromGrayImage = new int[image.length][image[0].length];
+        int[][] imageAsARGB = new int[image.length][];
         for (int i = 0; i < image.length; ++i){
             assert (image[i] != null);
+
+            imageAsARGB[i] = new int[image[i].length];
             for (int j = 0; j < image[i].length; ++j)
-                fromGrayImage[i][j] = argb((byte)0xFF, (byte) image[i][j], (byte) image[i][j], (byte) image[i][j]);
+                imageAsARGB[i][j] = argb((byte)0xFF, (byte) image[i][j], (byte) image[i][j], (byte) image[i][j]);
         }
-        return fromGrayImage;
+        return imageAsARGB;
     }
 
     /**
      * Build an ARGB image from the binary image
-     * @implNote The result of this method will a black and white image, not the original image
+     * @implNote The result of this method will return a black and white image, not the original image
      * @param image binary image representation
      * @return <b>black and white ARGB</b> representation
      */
     public static int[][] fromBinary(boolean[][] image){
         assert (image != null);
-        if (image.length == 0) {return new int[0][];}
 
-        int[][] binaryToGray = new int[image.length][image[0].length];
+        int[][] binaryToGray = new int[image.length][];
         for (int i = 0; i < image.length; ++i){
             assert (image[i] != null);
+
+            binaryToGray[i] = new int[image[i].length];
             for (int j = 0; j < image[i].length; ++j)
                 binaryToGray[i][j] = (image[i][j]) ? 255 : 0;
         }

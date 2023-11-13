@@ -64,6 +64,7 @@ public final class Encrypt {
         byte[] cipher = new byte[plainText.length];
         for (int i = 0; i < plainText.length; ++i)
             cipher[i] = (byte) (plainText[i] + keyword[i % keyword.length]);
+            //↑The modulo operator enables us to cycle through the characters in the keyword
 
         return cipher;
     }
@@ -86,14 +87,15 @@ public final class Encrypt {
 
         byte[] pad = iv.clone(); //← Avoid modifying arguments
         byte[] cipher = new byte[plainText.length];
-        //↓ TODO
-        int numberOfBlocks = (int) Math.ceil((double) plainText.length/T); //+ .length%T; //.length < T) ? 1 : plainText.length / T;
+        //↓ We want the loop to run once per whole block; +1 if some characters smaller than a block remain
+        int numberOfBlocks = (int) Math.ceil((double) plainText.length/T);
         //↓1. Iterate over the blocks
         for (int i = 0; i < numberOfBlocks; ++i) {
             //↓2. Iterate over the characters in block i (making sure you don't go out of bounds for the last block)
             for (int j = 0; (j < T) && (T*i + j < plainText.length); ++j) {
                 cipher[T*i + j] = (byte) (plainText[T*i + j] ^ pad[j]);
-                //↓ Once the pad's j'th coordinate has been used to encrypt the i'th block's j'th coordinate, it can be replaced on the fly with the newly found value for the next iteration of i
+                //↓ Once the pad's j'th coordinate has been used to encrypt the i'th block's j'th coordinate,
+                // it can be replaced on the fly with the newly found value for the next iteration of i
                 pad[j] = cipher[T*i + j];
             }
         }

@@ -36,8 +36,7 @@ public final class Bit {
      * @return embedded value
      */
     public static int embedInXthBit(int value, boolean m, int pos) {
-        assert (pos < Integer.SIZE);
-        assert (pos >= 0);
+        assert (0<=pos && pos<Integer.SIZE);
 
         if (m) {
             return value | (int) Math.pow(2, pos);
@@ -65,7 +64,7 @@ public final class Bit {
      * @return <code>true</code> if the bit is '1' and <code>false</code> otherwise
      */
     public static boolean getXthBit(int value, int pos) {
-        assert (0<=pos && pos < Integer.SIZE);
+        assert (0<=pos && pos<Integer.SIZE);
 
         int shiftedValue = value >>> pos;
         return (shiftedValue & 0b1) == 1;
@@ -115,13 +114,17 @@ public final class Bit {
      * @return byte array in the <b>bit array</b> format
      */
     public static boolean[] toBitArray(byte[] byteArray){
+        assert (byteArray != null);
+
         boolean[] byteAsBits; //Temporary byte containing new bits to unpack at each iteration
         boolean[] bitArray = new boolean[byteArray.length * Byte.SIZE];
+
         for (int i = 0; i < byteArray.length; ++i) {
             byteAsBits = Bit.toBitArray(byteArray[i]);
             for (int j = 0; j < Byte.SIZE; ++j)
                 bitArray[Byte.SIZE * i + j] = byteAsBits[j];
         }
+
         return bitArray;
     }
 
@@ -143,7 +146,7 @@ public final class Bit {
      */
     public static byte toByte(boolean[] bitArray){
         assert (bitArray != null);
-        assert (bitArray.length == 8);
+        assert (bitArray.length == Byte.SIZE);
 
         // Initialise sum with -128 if the MSB is 1, else 0
         int sum = bitArray[0] ? (-1*(int) Math.pow(2, Byte.SIZE-1)) : 0;
@@ -158,11 +161,14 @@ public final class Bit {
     }
 
     public static byte[] toBytes(boolean[] bitArray){
+        assert (bitArray != null);
+
         byte[] byteArray = new byte[bitArray.length/Byte.SIZE]; //Integer division to avoid reading any trailing bits
         for (int i = 0; i < byteArray.length; ++i) {
             boolean[] charAsBitArray = java.util.Arrays.copyOfRange(bitArray, Byte.SIZE*i, Byte.SIZE*(i+1));
             byteArray[i] = Bit.toByte(charAsBitArray);
         }
+
         return byteArray;
     }
 }
